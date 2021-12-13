@@ -4,17 +4,13 @@ import mongoose from 'mongoose';
 
 export async function runRoleSeed(): Promise<string | undefined> {
 
-    const dbHost = process.env.DB_HOST || 'localhost';
-    const dbPort = process.env.DB_PORT || 27017;
-    const dbName = process.env.DB_NAME || 'testing';
-
-    const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`
+    const dbUri = process.env.DB_URI || ""
 
     mongoose.set('useFindAndModify', false);
 
-    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-    mongoose.createConnection(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.createConnection(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
     let promises: any[] = [];
 

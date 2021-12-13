@@ -3,22 +3,21 @@ import { RoleRepo } from '../adapters/role/mongo_role_repository'
 
 import mongoose from 'mongoose';
 import { Profile } from '../../domain/user/models/userProfile';
-import { UserStatus } from '../../domain/user/models/user';
 import { role, Role } from '../../domain/role/models/role';
+
+import { config } from 'dotenv'
+
+config();
 
 export async function runUserSeed(): Promise<string | undefined> {
 
-    const dbHost = process.env.DB_HOST || 'localhost';
-    const dbPort = process.env.DB_PORT || 27017;
-    const dbName = process.env.DB_NAME || 'testing';
-
-    const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`
+    const dbUri = process.env.DB_URI || ""
 
     mongoose.set('useFindAndModify', false);
 
-    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-    mongoose.createConnection(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.createConnection(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
     let promises: any[] = [];
 
