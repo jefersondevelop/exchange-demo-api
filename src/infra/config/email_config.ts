@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import handlebars from 'nodemailer-express-handlebars'
 
+import * as path from 'path'
+
 dotenv.config();
 
 let smtpTrans = nodemailer.createTransport({
@@ -22,11 +24,11 @@ let smtpTrans = nodemailer.createTransport({
 
 smtpTrans.use('compile', handlebars({
     viewEngine: {
-        partialsDir: '../api/src/infra/templates/',
-        layoutsDir: '../api/src/infra/templates/',
+        partialsDir: path.join(`${__dirname}`, "../templates"),
+        layoutsDir: path.join(`${__dirname}`, "../templates"),
         defaultLayout: "recoverpass"
     },
-    viewPath: '../api/src/infra/templates/'
+    viewPath: path.join(`${__dirname}`, "../templates")
 }))
 
 export default smtpTrans;
