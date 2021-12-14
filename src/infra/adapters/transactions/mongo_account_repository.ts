@@ -56,7 +56,10 @@ export class MongoTransactionRepo implements TransactionRepository {
         return result;
     }
     async findByUser(id?: string): Promise<Transaction[] | undefined> {
-        let transactions = await TransactionRepo.find({ userId: id });
+        let transactions = await TransactionRepo.find().populate({
+            path: 'account',
+            match: { userId: id }
+        });
         let result: any[] = []
         if (transactions && transactions.length > 0) {
             result = transactions.map((transaction: any) => {
